@@ -1,0 +1,13 @@
+{
+  "apiVersion": "tanka.dev/v1alpha1",
+  "kind": "Environment",
+  "metadata": {
+    "name": "environments/clusters/workshop"
+  },
+  "spec": {
+    "apiServer": "https://workshop.cluster.test.kubernetes.lib.umich.edu",
+    "namespace": "argocd",
+    "resourceDefaults": {},
+    "expectVersions": {}
+  }
+}
