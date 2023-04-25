@@ -1,7 +1,11 @@
 {
   secrets: [
-    import './db.json',
-    import './ghost.json',
+    (import './db.json') + { metadata+: { labels+: {
+      'argocd.argoproj.io/instance': 'web-plus-database'
+    }}},
+    (import './ghost.json') + { metadata+: { labels+: {
+      'argocd.argoproj.io/instance': 'web-plus-database'
+    }}},
   ],
 
   namespace: {
@@ -19,6 +23,7 @@
     metadata: {
       name: 'web',
       namespace: 'ghost',
+      labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
     },
     spec: {
       replicas: 1,
@@ -72,6 +77,7 @@
     metadata: {
       name: 'db',
       namespace: 'ghost',
+      labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
     },
     spec: {
       replicas: 1,
@@ -118,6 +124,7 @@
     metadata: {
       name: 'web',
       namespace: 'ghost',
+      labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
     },
     spec: {
       type: 'ClusterIP',
@@ -135,6 +142,7 @@
     metadata: {
       name: 'db',
       namespace: 'ghost',
+      labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
     },
     spec: {
       type: 'ClusterIP',
@@ -152,6 +160,7 @@
     metadata: {
       name: 'web',
       namespace: 'ghost',
+      labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
       annotations: {
         'cert-manager.io/cluster-issuer': 'letsencrypt',
       },
@@ -181,6 +190,7 @@
     metadata: {
       name: 'db',
       namespace: 'ghost',
+      labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
     },
     spec: {
       accessModes: ['ReadWriteOnce'],
