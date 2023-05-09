@@ -1,13 +1,13 @@
-(import './common.libsonnet') + {
+{
   _config+:: {
-    cluster_name: error 'must provide $._config.cluster_name',
+    kube_common_branch: error 'must provide $._config.kube_common_branch',
   },
 
-  app_of_apps: {
+  argocd: {
     apiVersion: 'argoproj.io/v1alpha1',
     kind: 'Application',
     metadata: {
-      name: 'app-of-apps',
+      name: 'argocd-with-tanka',
       labels: { 'argocd.argoproj.io/instance': 'app-of-apps' },
     },
     spec: {
@@ -15,23 +15,23 @@
       destination: { server: 'https://kubernetes.default.svc' },
       syncPolicy: { automated: { prune: true, selfHeal: true } },
       source: {
-        repoURL: 'https://github.com/mlibrary/test-kube',
-        targetRevision: 'HEAD',
+        repoURL: 'https://github.com/mlibrary/kube-common',
+        targetRevision: $._config.kube_common_branch,
         path: '.',
         plugin: { env: [{
           name: 'TANKA_PATH',
-          value: 'environments/clusters/%s' % $._config.cluster_name,
+          value: 'environments/argocd-with-tanka',
         }] },
       },
     },
   },
 
-  web_plus_database: self.app_of_apps + {
-    metadata+: { name: 'web-plus-database' },
+  sealed_secrets: self.argocd + {
+    metadata+: { name: 'sealed-secrets-common' },
     spec+: { source+: {
       plugin: { env: [{
         name: 'TANKA_PATH',
-        value: 'environments/web-plus-database/%s' % $._config.cluster_name,
+        value: 'environments/sealed-secrets',
       }]},
     }},
   },
