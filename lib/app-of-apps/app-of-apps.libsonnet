@@ -41,6 +41,16 @@
     },
   },
 
+  sealed_secrets: self.argocd + {
+    metadata+: { name: 'sealed-secrets-common' },
+    spec+: { source+: {
+      plugin: { env: [{
+        name: 'TANKA_PATH',
+        value: 'environments/sealed-secrets',
+      }]},
+    }},
+  },
+
   web_plus_database: self.app_of_apps + {
     metadata+: { name: 'web-plus-database' },
     spec+: { source+: {
