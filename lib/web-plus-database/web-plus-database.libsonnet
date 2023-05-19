@@ -166,6 +166,7 @@
       },
     },
     spec: {
+      ingressClassName: 'nginx',
       tls: [{
         secretName: 'web-tls',
         hosts: [$._config.fqdn],
