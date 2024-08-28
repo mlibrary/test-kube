@@ -17,41 +17,41 @@
         labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
       },
     },
-    podA: {
+    'pod-a': {
       apiVersion: 'apps/v1',
       kind: 'Deployment',
       metadata: {
-        name: 'podA',
+        name: 'pod-a',
         namespace: 'rook-bug',
         labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
       },
       spec: {
         replicas: 1,
         selector: { matchLabels: {
-          'app.kubernetes.io/name': 'podA',
+          'app.kubernetes.io/name': 'pod-a',
           'app.kubernetes.io/part-of': 'rook-bug',
         } },
         template: {
           metadata: { labels: {
-            'app.kubernetes.io/name': 'podA',
+            'app.kubernetes.io/name': 'pod-a',
             'app.kubernetes.io/part-of': 'rook-bug',
           } },
           spec: {
             volumes: [
               {
-                name: 'rwMany',
+                name: 'rw-many',
                 persistentVolumeClaim: {
-                  claimName: 'rwMany',
+                  claimName: 'rw-many',
                 },
               },
             ],
             containers: [
               {
-                name: 'podA',
+                name: 'pod-a',
                 image: 'busybox:latest',
                 volumeMounts: [
                   {
-                    name: 'rwMany',
+                    name: 'rw-many',
                     mountPath: '/opt/test',
                   },
                 ],
@@ -61,41 +61,41 @@
         },
       },
     },
-    podB: {
+    'pod-b': {
       apiVersion: 'apps/v1',
       kind: 'Deployment',
       metadata: {
-        name: 'podB',
+        name: 'pod-b',
         namespace: 'rook-bug',
         labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
       },
       spec: {
         replicas: 1,
         selector: { matchLabels: {
-          'app.kubernetes.io/name': 'podB',
+          'app.kubernetes.io/name': 'pod-b',
           'app.kubernetes.io/part-of': 'rook-bug',
         } },
         template: {
           metadata: { labels: {
-            'app.kubernetes.io/name': 'podB',
+            'app.kubernetes.io/name': 'pod-b',
             'app.kubernetes.io/part-of': 'rook-bug',
           } },
           spec: {
             volumes: [
               {
-                name: 'rwMany',
+                name: 'rw-many',
                 persistentVolumeClaim: {
-                  claimName: 'rwMany',
+                  claimName: 'rw-many',
                 },
               },
             ],
             containers: [
               {
-                name: 'podB',
+                name: 'pod-b',
                 image: 'busybox:latest',
                 volumeMounts: [
                   {
-                    name: 'rwMany',
+                    name: 'rw-many',
                     mountPath: '/opt/test',
                   },
                 ],
@@ -105,11 +105,11 @@
         },
       },
     },
-    rwMany: {
+    'rw-many': {
       apiVersion: 'v1',
       kind: 'PersistentVolumeClaim',
       metadata: {
-        name: 'rwMany',
+        name: 'rw-many',
         namespace: 'rook-bug',
         labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
       },
