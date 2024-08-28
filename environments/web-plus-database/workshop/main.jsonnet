@@ -55,6 +55,11 @@
                     mountPath: '/opt/test',
                   },
                 ],
+                command: [
+                  '/bin/sh',
+                  '-c',
+                  'trap : TERM INT; sleep 9999999999d & wait',
+                ],
               },
             ],
           },
@@ -98,6 +103,11 @@
                     name: 'rw-many',
                     mountPath: '/opt/test',
                   },
+                ],
+                command: [
+                  '/bin/sh',
+                  '-c',
+                  'trap : TERM INT; sleep 9999999999d & wait',
                 ],
               },
             ],
