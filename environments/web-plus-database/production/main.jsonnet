@@ -7,7 +7,7 @@
       import './ghost.json',
     ],
   },
-
+/*
   db+: {
     spec+: {
       template+: {
@@ -33,4 +33,5 @@
       },
     },
   },
+  */
 }
