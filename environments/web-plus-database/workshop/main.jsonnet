@@ -115,6 +115,19 @@
         },
       },
     },
+    'rw-many': {
+      apiVersion: 'v1',
+      kind: 'PersistentVolumeClaim',
+      metadata: {
+        name: 'rw-many',
+        namespace: 'rook-bug',
+        labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
+      },
+      spec: {
+        accessModes: ['ReadWriteOnce'],
+        resources: { requests: { storage: '25Mi' } },
+      },
+    },
     rwop: {
       apiVersion: 'v1',
       kind: 'PersistentVolumeClaim',
