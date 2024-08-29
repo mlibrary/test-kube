@@ -124,7 +124,7 @@
         labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
       },
       spec: {
-        accessModes: ['ReadWriteOncePod'],
+        accessModes: ['ReadWriteOnce'],
         resources: { requests: { storage: '25Mi' } },
       },
     },
