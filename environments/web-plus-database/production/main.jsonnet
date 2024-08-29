@@ -7,7 +7,7 @@
       import './ghost.json',
     ],
   },
-/*
+
   db+: {
     spec+: {
       template+: {
@@ -20,18 +20,22 @@
       },
     },
   },
-
-  pvc+: {
-    metadata+: {
+  'pvc-fwop': {
+    apiVersion: 'v1',
+    kind: 'PersistentVolumeClaim',
+    metadata: {
       name: 'db-pvc',
+      namespace: 'ghost',
+      labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
     },
-    spec+: {
+    spec: {
       accessModes: ['ReadWriteOncePod'],
+      resources: { requests: { storage: '1G' } },
       dataSource: {
         kind: 'PersistentVolumeClaim',
         name: 'db',
       },
     },
   },
-  */
+
 }
