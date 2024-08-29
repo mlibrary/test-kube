@@ -6,7 +6,7 @@
       import './db.json',
       import './ghost.json',
     ],
-  }
+  },
 
   db+: {
     spec+: {
