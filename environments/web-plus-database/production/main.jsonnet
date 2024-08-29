@@ -14,7 +14,7 @@
         spec+: {
           volumes: [{
             name: 'db',
-            persistentVolumeClaim: { claimName: 'db-pvc' },
+            persistentVolumeClaim: { claimName: 'db' },
           }],
         },
       },
