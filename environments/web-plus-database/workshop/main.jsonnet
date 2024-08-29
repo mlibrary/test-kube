@@ -88,9 +88,9 @@
           spec: {
             volumes: [
               {
-                name: 'rw-many',
+                name: 'rwop-2',
                 persistentVolumeClaim: {
-                  claimName: 'rw-many',
+                  claimName: 'rwop-2',
                 },
               },
             ],
@@ -100,7 +100,7 @@
                 image: 'busybox:latest',
                 volumeMounts: [
                   {
-                    name: 'rw-many',
+                    name: 'rwop-2',
                     mountPath: '/opt/test',
                   },
                 ],
@@ -115,24 +115,29 @@
         },
       },
     },
-    'rw-many': {
-      apiVersion: 'v1',
-      kind: 'PersistentVolumeClaim',
-      metadata: {
-        name: 'rw-many',
-        namespace: 'rook-bug',
-        labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
-      },
-      spec: {
-        accessModes: ['ReadWriteOnce'],
-        resources: { requests: { storage: '25Mi' } },
-      },
-    },
     rwop: {
       apiVersion: 'v1',
       kind: 'PersistentVolumeClaim',
       metadata: {
-        name: rwop,
+        name: 'rwop',
+        namespace: 'rook-bug',
+        labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
+      },
+      spec: {
+        accessModes: ['ReadWriteOncePod'],
+        resources: { requests: { storage: '25Mi' } },
+        dataSource: {
+          kind: 'PersistentVolumeClaim',
+          name: 'rw-many',
+        },
+      },
+
+    },
+    'rwop-2': {
+      apiVersion: 'v1',
+      kind: 'PersistentVolumeClaim',
+      metadata: {
+        name: 'rwop-2',
         namespace: 'rook-bug',
         labels: { 'argocd.argoproj.io/instance': 'web-plus-database' },
       },
