@@ -20,7 +20,7 @@
       },
     },
   },
-  'db-vol': {
+  pvc+: {
     apiVersion: 'v1',
     kind: 'PersistentVolumeClaim',
     metadata: {
