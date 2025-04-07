@@ -17,6 +17,30 @@
     },
   },
 
+  default_resources: {
+    apiVersion: 'v1',
+    kind: 'LimitRange',
+    metadata: {
+      name: 'default-container-resources',
+      namespace: 'ghost',
+    },
+    spec: {
+      limits: [{
+        type: 'Container',
+        defaultRequest: {
+          cpu: '1m',
+          memory: '1Mi',
+          'ephemeral-storage': '1Mi',
+        },
+        default: {
+          cpu: '250m',
+          memory: '512Mi',
+          'ephemeral-storage': '512Mi',
+        },
+      }],
+    },
+  },
+
   web: {
     apiVersion: 'apps/v1',
     kind: 'Deployment',
