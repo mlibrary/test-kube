@@ -61,36 +61,47 @@
           'app.kubernetes.io/component': 'server',
           'app.kubernetes.io/part-of': 'ghost',
         } },
-        spec: { containers: [{
-          name: 'web',
-          image: 'ghost:latest',
-          ports: [{ containerPort: 2368 }],
-          env: [{
-            name: 'database__client',
-            value: 'mysql',
-          }, {
-            name: 'database__connection__host',
-            value: 'db',
-          }, {
-            name: 'database__connection__user',
-            valueFrom: { secretKeyRef: {
-              name: 'db',
-              key: 'database__connection__user',
-            }}
-          }, {
-            name: 'database__connection__password',
-            valueFrom: { secretKeyRef: {
-              name: 'db',
-              key: 'database__connection__password',
-            }}
-          }, {
-            name: 'database__connection__database',
-            value: 'ghost',
-          }, {
-            name: 'url',
-            value: 'https://%s' % $._config.fqdn,
+        spec: {
+          containers: [{
+            name: 'web',
+            image: 'ghost:latest',
+            ports: [{ containerPort: 2368 }],
+            env: [{
+              name: 'database__client',
+              value: 'mysql',
+            }, {
+              name: 'database__connection__host',
+              value: 'db',
+            }, {
+              name: 'database__connection__user',
+              valueFrom: { secretKeyRef: {
+                name: 'db',
+                key: 'database__connection__user',
+              }}
+            }, {
+              name: 'database__connection__password',
+              valueFrom: { secretKeyRef: {
+                name: 'db',
+                key: 'database__connection__password',
+              }}
+            }, {
+              name: 'database__connection__database',
+              value: 'ghost',
+            }, {
+              name: 'url',
+              value: 'https://%s' % $._config.fqdn,
+            }],
+            volumeMounts: [{
+              name: 'robots',
+              mountPath: '/var/lib/ghost/versions/5.115.1/core/frontend/public/robots.txt',
+              subPath: 'robots.txt',
+            }],
           }],
-        }] },
+          volumes: [{
+            name: 'robots',
+            configMap: { name: 'robots-txt' },
+          }],
+        },
       },
     },
   },
@@ -220,6 +231,18 @@
     spec: {
       accessModes: ['ReadWriteOnce'],
       resources: { requests: { storage: '1G' } },
+    },
+  },
+
+  robots_txt: {
+    apiVersion: 'v1',
+    kind: 'ConfigMap',
+    metadata: { name: 'robots-txt' },
+    data: {
+      'robots.txt': |||
+        User-agent: *
+        Disallow: /
+      |||
     },
   },
 }
